@@ -54,7 +54,3 @@ Once installed, you can access the tool window directly from the IDE workspace:
 ## 🛠️ Compatibility
 
 Compatible with JetBrains IDEs version **2024.1** and higher.
-
-## 📝 License
-
-Created and maintained by [Chalda Pnuzig](https://chalda.it).
