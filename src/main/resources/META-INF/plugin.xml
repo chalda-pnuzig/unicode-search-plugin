@@ -1,0 +1,35 @@
+<idea-plugin>
+    <id>it.chalda.unicodesearch</id>
+    <name>Unicode Search</name>
+    <version>1.0.0</version>
+    <vendor email="chalda_vendor@chalda.it" url="https://chalda.it">Chalda Pnuzig</vendor>
+
+    <description><![CDATA[
+    Search and insert Unicode characters.
+    <br><br>
+    This tool window plugin helps you quickly find, copy, and insert Unicode characters and symbols directly into your editor.
+    <br><br>
+    <b>Key Features:</b>
+    <ul>
+      <li>Search by character name, Unicode block, category, or hex codepoint.</li>
+      <li>Copy or insert characters as raw text, hex, HTML entity, decimal, or character name.</li>
+      <li>Detailed visual preview with hover tooltips showing code, block, and category.</li>
+      <li>Supports multi-word queries, supplementary Unicode planes, and customizable pagination limit.</li>
+      <li>Right-click context menu for quick copy and insertion.</li>
+    </ul>
+    ]]></description>
+    <change-notes><![CDATA[
+    Version 1.0.0 - 2026-03-13
+    <ul>
+      <li>Initial release.</li>
+    </ul>
+    ]]></change-notes>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Unicode Search" 
+                    anchor="right" 
+                    factoryClass="com.plugin.unicode.UnicodeToolWindowFactory" 
+                    icon="AllIcons.Actions.Search"/>
+    </extensions>
+</idea-plugin>
