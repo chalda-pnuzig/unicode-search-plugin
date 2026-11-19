@@ -70,7 +70,7 @@ class UnicodeCharacterComponent(
     private fun showPopupMenu(e: MouseEvent) {
         val menu = javax.swing.JPopupMenu()
         val formats = listOf("Character", "Hex", "Decimal", "Entity", "Name")
-        
+
         val copyMenu = javax.swing.JMenu("Copy as")
         for (f in formats) {
             val item = javax.swing.JMenuItem(f)
@@ -86,7 +86,7 @@ class UnicodeCharacterComponent(
             insertMenu.add(item)
         }
         menu.add(insertMenu)
-        
+
         menu.show(e.component, e.x, e.y)
     }
 
@@ -111,7 +111,7 @@ class UnicodeCharacterComponent(
             val text = getText(format)
             val document = editor.document
             val caretModel = editor.caretModel
-            
+
             com.intellij.openapi.command.WriteCommandAction.runWriteCommandAction(project) {
                 val selectionModel = editor.selectionModel
                 if (selectionModel.hasSelection()) {

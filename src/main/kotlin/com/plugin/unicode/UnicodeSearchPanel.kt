@@ -26,8 +26,17 @@ class UnicodeSearchPanel(private val project: Project) : JPanel(BorderLayout()) 
         override fun getScrollableTracksViewportWidth(): Boolean = true
         override fun getScrollableTracksViewportHeight(): Boolean = false
         override fun getPreferredScrollableViewportSize(): Dimension = preferredSize
-        override fun getScrollableUnitIncrement(visibleRect: java.awt.Rectangle?, orientation: Int, direction: Int): Int = 10
-        override fun getScrollableBlockIncrement(visibleRect: java.awt.Rectangle?, orientation: Int, direction: Int): Int = 100
+        override fun getScrollableUnitIncrement(
+            visibleRect: java.awt.Rectangle?,
+            orientation: Int,
+            direction: Int
+        ): Int = 10
+
+        override fun getScrollableBlockIncrement(
+            visibleRect: java.awt.Rectangle?,
+            orientation: Int,
+            direction: Int
+        ): Int = 100
     }
     private val loadMoreButton = javax.swing.JButton("Load More")
     private val loadMorePanel = JPanel(FlowLayout(FlowLayout.CENTER))
@@ -44,13 +53,13 @@ class UnicodeSearchPanel(private val project: Project) : JPanel(BorderLayout()) 
 
     private fun setupUI() {
         val topPanel = JPanel(BorderLayout())
-        
+
         val searchPanel = JPanel(BorderLayout())
         searchPanel.add(searchField, BorderLayout.CENTER)
         searchPanel.add(settingsButton, BorderLayout.EAST)
-        
+
         topPanel.add(searchPanel, BorderLayout.CENTER)
-        
+
         mainResultsContainer.add(resultsPanel, BorderLayout.CENTER)
         loadMorePanel.add(loadMoreButton)
         mainResultsContainer.add(loadMorePanel, BorderLayout.SOUTH)
@@ -128,18 +137,19 @@ class UnicodeSearchPanel(private val project: Project) : JPanel(BorderLayout()) 
         SwingUtilities.invokeLater {
             val limit = pageSizeCombo.selectedItem as Int
             val searchResult = UnicodeDataProvider.search(searchField.text, limit, currentOffset)
-            
+
             for (unicodeChar in searchResult.results) {
-                resultsPanel.add(UnicodeCharacterComponent(
-                    unicodeChar, 
-                    project,
-                    { copyFormatCombo.selectedItem as String },
-                    { clickActionCombo.selectedItem as String }
-                ))
+                resultsPanel.add(
+                    UnicodeCharacterComponent(
+                        unicodeChar,
+                        project,
+                        { copyFormatCombo.selectedItem as String },
+                        { clickActionCombo.selectedItem as String }
+                    ))
             }
-            
+
             loadMorePanel.isVisible = searchResult.hasMore
-            
+
             resultsPanel.revalidate()
             resultsPanel.repaint()
         }

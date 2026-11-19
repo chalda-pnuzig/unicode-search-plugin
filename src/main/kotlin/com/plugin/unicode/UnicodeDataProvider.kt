@@ -16,7 +16,7 @@ object UnicodeDataProvider {
         val result = mutableListOf<UnicodeChar>()
         // Iterating through BMP (0..FFFF) and SMP (10000..1FFFF)
         val ranges = listOf(32..0xFFFF, 0x10000..0x1FFFF)
-        
+
         for (range in ranges) {
             for (i in range) {
                 if (Character.isValidCodePoint(i) && Character.getType(i).toByte() != Character.UNASSIGNED) {
@@ -24,15 +24,17 @@ object UnicodeDataProvider {
                     val name = Character.getName(i) ?: "UNKNOWN"
                     val block = Character.UnicodeBlock.of(i)?.toString() ?: "UNKNOWN"
                     val category = getCategoryName(Character.getType(i))
-                    
-                    result.add(UnicodeChar(
-                        char = char,
-                        codePoint = i,
-                        hex = "U+%04X".format(i),
-                        name = name,
-                        block = block,
-                        category = category
-                    ))
+
+                    result.add(
+                        UnicodeChar(
+                            char = char,
+                            codePoint = i,
+                            hex = "U+%04X".format(i),
+                            name = name,
+                            block = block,
+                            category = category
+                        )
+                    )
                 }
             }
         }
@@ -52,17 +54,17 @@ object UnicodeDataProvider {
             characters.asSequence().filter { char ->
                 words.all { word ->
                     char.name.lowercase().contains(word) ||
-                    char.hex.lowercase().contains(word) ||
-                    char.block.lowercase().contains(word) ||
-                    char.category.lowercase().contains(word) ||
-                    char.char.contains(word)
+                            char.hex.lowercase().contains(word) ||
+                            char.block.lowercase().contains(word) ||
+                            char.category.lowercase().contains(word) ||
+                            char.char.contains(word)
                 }
             }
         }
 
         val results = matchingSequence.drop(offset).take(limit + 1).toList()
         val hasMore = results.size > limit
-        
+
         return SearchResult(
             results = if (hasMore) results.dropLast(1) else results,
             hasMore = hasMore
