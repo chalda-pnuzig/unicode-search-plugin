@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>it.chalda.unicodesearch</id>
     <name>Unicode Search</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="chalda_vendor@chalda.it" url="https://chalda.it">Chalda Pnuzig</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,10 @@
     </ul>
     ]]></description>
     <change-notes><![CDATA[
+    Version 1.0.1 - 2026-11-19
+    <ul>
+      <li>Enabled JetBrains Marketplace error reporting for exceptions and UI freezes.</li>
+    </ul>
     Version 1.0.0 - 2026-03-13
     <ul>
       <li>Initial release.</li>
@@ -27,9 +31,10 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Unicode Search" 
-                    anchor="right" 
-                    factoryClass="com.plugin.unicode.UnicodeToolWindowFactory" 
+        <toolWindow id="Unicode Search"
+                    anchor="right"
+                    factoryClass="com.plugin.unicode.UnicodeToolWindowFactory"
                     icon="AllIcons.Actions.Search"/>
+        <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
     </extensions>
 </idea-plugin>
