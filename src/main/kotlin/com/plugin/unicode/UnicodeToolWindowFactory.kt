@@ -7,6 +7,8 @@ import com.intellij.ui.content.ContentFactory
 
 class UnicodeToolWindowFactory : ToolWindowFactory {
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+        // Start tracking editor focus as soon as the tool window exists
+        LastFocusedEditorTracker.getInstance(project)
         val unicodeSearchPanel = UnicodeSearchPanel(project)
         val content = ContentFactory.getInstance().createContent(unicodeSearchPanel, "", false)
         toolWindow.contentManager.addContent(content)

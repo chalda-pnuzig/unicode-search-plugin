@@ -5,13 +5,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.ui.JBColor
 import com.intellij.ui.components.JBLabel
-import com.intellij.util.ui.JBUI
 import java.awt.Cursor
 import java.awt.Dimension
 import java.awt.datatransfer.StringSelection
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import javax.swing.SwingConstants
 import javax.swing.SwingUtilities
 import javax.swing.border.LineBorder
 
@@ -20,7 +18,7 @@ class UnicodeCharacterComponent(
     private val project: Project,
     private val formatProvider: () -> String,
     private val actionProvider: () -> String
-) : JBLabel(unicodeChar.char, SwingConstants.CENTER) {
+) : JBLabel(unicodeChar.char, CENTER) {
 
     init {
         preferredSize = Dimension(40, 40)
@@ -106,22 +104,27 @@ class UnicodeCharacterComponent(
     }
 
     private fun insertIntoEditor(format: String) {
-        val editor = com.intellij.openapi.fileEditor.FileEditorManager.getInstance(project).selectedTextEditor
-        if (editor != null) {
-            val text = getText(format)
-            val document = editor.document
-            val caretModel = editor.caretModel
+        val editor = LastFocusedEditorTracker.getInstance(project).getTargetEditor() ?: return
+        val text = getText(format)
+        val document = editor.document
+        val caretModel = editor.caretModel
 
-            com.intellij.openapi.command.WriteCommandAction.runWriteCommandAction(project) {
-                val selectionModel = editor.selectionModel
-                if (selectionModel.hasSelection()) {
-                    document.replaceString(selectionModel.selectionStart, selectionModel.selectionEnd, text)
-                } else {
-                    document.insertString(caretModel.offset, text)
-                    caretModel.moveToOffset(caretModel.offset + text.length)
-                }
+        com.intellij.openapi.command.WriteCommandAction.runWriteCommandAction(project) {
+            val selectionModel = editor.selectionModel
+            if (selectionModel.hasSelection()) {
+                val start = selectionModel.selectionStart
+                document.replaceString(start, selectionModel.selectionEnd, text)
+                selectionModel.removeSelection()
+                caretModel.moveToOffset(start + text.length)
+            } else {
+                val offset = caretModel.offset
+                document.insertString(offset, text)
+                caretModel.moveToOffset(offset + text.length)
             }
         }
+
+        // Give focus back to the editor (also brings a detached editor window to the front)
+        com.intellij.openapi.wm.IdeFocusManager.getInstance(project).requestFocus(editor.contentComponent, true)
     }
 
     private fun setupHoverEffect() {

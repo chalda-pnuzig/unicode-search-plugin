@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>it.chalda.unicodesearch</id>
     <name>Unicode Search</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <vendor email="chalda_vendor@chalda.it" url="https://chalda.it">Chalda Pnuzig</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,10 @@
     </ul>
     ]]></description>
     <change-notes><![CDATA[
+    Version 1.0.2 - 2026-11-19
+    <ul>
+      <li>Fixed: "Insert" now targets the last focused editor, including split and detached editor windows.</li>
+    </ul>
     Version 1.0.1 - 2026-11-19
     <ul>
       <li>Enabled JetBrains Marketplace error reporting for exceptions and UI freezes.</li>
